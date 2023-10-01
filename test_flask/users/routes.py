@@ -23,6 +23,6 @@ def register():
         db.session.commit()
         flash('Ваша учетная запись была создана!'
               ' Теперь вы можете войти в систему', 'success')
-        return redirect(url_for('users.login'))
+        return redirect(url_for('users.home'))
     return render_template('register.html', title='Register', form=form)
 
