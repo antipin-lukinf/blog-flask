@@ -20,9 +20,13 @@ def create_app():
 
     from test_flask.main.routes import main
     from test_flask.users.routes import users
+    from test_flask.posts.routes import posts
 
-
-    app.register_blueprint(main)       #регистрация blueprint из файла routes
+    app.register_blueprint(main)  # регистрация blueprint из файла routes
     app.register_blueprint(users)
+    app.register_blueprint(posts)
     app.config.from_object(Config)
     return app
+
+
+

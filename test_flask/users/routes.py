@@ -30,7 +30,7 @@ def register():
 @users.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
+        return redirect(url_for('posts.allpost'))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -38,8 +38,9 @@ def login():
         if user and bcrypt.check_password_hash(user.password,
                                                form.password.data):
             login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('posts.allpost'))
 
-            return redirect(url_for('main.home'))
         else:
             flash('Войти не удалось. Пожалуйста, '
                   'проверьте электронную почту и пароль', 'внимание')
@@ -73,3 +74,9 @@ def account():
     return render_template('account.html', title='Аккаунт',
                            image_file=image_file, form=form, posts=posts,
                            user=user)
+
+
+@users.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('main.home'))

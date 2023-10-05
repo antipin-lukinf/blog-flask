@@ -1,10 +1,15 @@
 from flask import render_template, Blueprint
 from test_flask.models import User
 
-main = Blueprint('main', __name__) #макет
+from flask import render_template
 
 
-@main.route("/")       #главная страница
-@main.route("/home")       #страница home
+main = Blueprint('main', __name__)
+
+
+@main.route("/")
+@main.route("/home")
 def home():
     return render_template('home.html')
+
+
