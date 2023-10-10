@@ -12,9 +12,21 @@ posts = Blueprint('posts', __name__)
 @login_required
 def allpost():
     page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.date_posted.desc()).\
+    posts = Post.query.order_by(Post.date_posted.desc()). \
         paginate(page=page, per_page=5)
     return render_template('allpost.html', posts=posts)
 
 
-
+@posts.route("/post/new", methods=['GET', 'POST'])           # создание нового поста
+@login_required
+def new_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, content=form.content.data,
+                    author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Ваш пост создан!', 'success')
+        return redirect(url_for('posts.allpost'))
+    return render_template('create_post.html',
+                           title='Новый пост', form=form, legend='Новый пост')
