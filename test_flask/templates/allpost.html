@@ -45,7 +45,7 @@
     </article>
     
     <div class="card" style="margin-bottom: 20px;">
-      <div class="card-body">
+      <div class="card-body"><a href="{{ url_for('users.user_posts', username=post.author.username) }}" id="author" style="margin: 0 auto;">{{ post.author.username }}</a>
 
         <small>Опубликовано {{ post.date_posted.strftime('%A, %d %B %Y %I:%M %p') }}</small>
         <br>
