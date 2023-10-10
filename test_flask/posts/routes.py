@@ -17,7 +17,7 @@ def allpost():
     return render_template('allpost.html', posts=posts)
 
 
-@posts.route("/post/new", methods=['GET', 'POST'])           # создание нового поста
+@posts.route("/post/new", methods=['GET', 'POST'])  # создание нового поста
 @login_required
 def new_post():
     form = PostForm()
@@ -30,3 +30,9 @@ def new_post():
         return redirect(url_for('posts.allpost'))
     return render_template('create_post.html',
                            title='Новый пост', form=form, legend='Новый пост')
+
+
+@posts.route("/post/<int:post_id>")
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post.html', title=post.title, post=post)
